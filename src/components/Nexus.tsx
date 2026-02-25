@@ -111,21 +111,25 @@ export default function Nexus() {
                             title="Contextual Oracle"
                             desc="Optimized for deep knowledge retrieval and zero-latency technical support."
                             tags={["RAG-Native", "Pulse-X"]}
+                            onClick={() => handleDeploy("Contextual Oracle")}
                         />
                         <ArchCard
                             title="Creative Resonance"
                             desc="High emotional empathy for storytelling, coaching, and human companionship."
                             tags={["Bhaava-V2", "Epoch-Max"]}
+                            onClick={() => handleDeploy("Creative Resonance")}
                         />
                         <ArchCard
                             title="Executive Sentinel"
                             desc="Stoic, precise, and authoritative orchestration for business operations."
                             tags={["Elite-Calibrated", "Low-Tension"]}
+                            onClick={() => handleDeploy("Executive Sentinel")}
                         />
                         <ArchCard
                             title="Custom Blueprint"
                             desc="Seed your own weights and define unique emotional boundary parameters."
                             tags={["Raw Weights", "Open-Sovereign"]}
+                            onClick={() => handleDeploy("Custom Blueprint")}
                         />
                     </div>
                 </div>
