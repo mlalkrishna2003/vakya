@@ -20,7 +20,9 @@ export default function Home() {
 
           {/* Logo mark */}
           <div className="flex justify-center">
-            <Image src="/logo.svg" alt="Vakya" width={80} height={80} className="opacity-90" />
+            <div className="relative w-32 h-32 rounded-full overflow-hidden shadow-[0_0_40px_rgba(20,184,166,0.3)] border border-teal-500/20">
+              <Image src="/logo.png" alt="Vakya" fill sizes="128px" className="object-cover object-center" priority />
+            </div>
           </div>
 
           {/* Headline */}
