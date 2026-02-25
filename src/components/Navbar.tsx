@@ -48,8 +48,8 @@ export default function Navbar() {
                             key={link.href}
                             href={link.href}
                             className={`text-sm font-semibold transition-colors duration-200 ${pathname === link.href
-                                    ? "text-teal-400"
-                                    : "text-slate-400 hover:text-white"
+                                ? "text-teal-400"
+                                : "text-slate-400 hover:text-white"
                                 }`}
                         >
                             {link.label}
@@ -57,14 +57,20 @@ export default function Navbar() {
                     ))}
                 </div>
 
-                {/* Desktop CTA */}
-                <div className="hidden md:block">
+                {/* Desktop CTAs */}
+                <div className="hidden md:flex items-center gap-3">
+                    <Link
+                        href="/app"
+                        className="flex items-center gap-2 px-5 py-2.5 rounded-full border border-teal-500/40 text-teal-400 text-sm font-bold hover:bg-teal-500/10 transition-all"
+                    >
+                        Dhvani OS
+                        <ArrowRight className="w-4 h-4" />
+                    </Link>
                     <Link
                         href="/contact"
                         className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-teal-500 text-black text-sm font-bold shadow-[0_0_20px_rgba(20,184,166,0.4)] hover:scale-105 transition-all active:scale-95"
                     >
                         Join Waitlist
-                        <ArrowRight className="w-4 h-4" />
                     </Link>
                 </div>
 
@@ -99,8 +105,12 @@ export default function Navbar() {
                             {link.label}
                         </Link>
                     ))}
+                    <Link href="/app" onClick={() => setOpen(false)}
+                        className="mt-4 flex items-center justify-center gap-2 px-6 py-4 rounded-full border border-teal-500/40 text-teal-400 font-bold">
+                        Dhvani OS <ArrowRight className="w-4 h-4" />
+                    </Link>
                     <Link href="/contact" onClick={() => setOpen(false)}
-                        className="mt-4 flex items-center justify-center gap-2 px-6 py-4 rounded-full bg-teal-500 text-black font-bold shadow-[0_0_20px_rgba(20,184,166,0.3)]">
+                        className="flex items-center justify-center gap-2 px-6 py-4 rounded-full bg-teal-500 text-black font-bold shadow-[0_0_20px_rgba(20,184,166,0.3)]">
                         Join Waitlist <ArrowRight className="w-4 h-4" />
                     </Link>
                 </div>
