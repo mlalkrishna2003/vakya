@@ -33,7 +33,7 @@ export default function ContactPage() {
                     Join the<br />Inner Circle.
                 </h1>
                 <p className="text-lg text-slate-400 max-w-xl mx-auto leading-relaxed">
-                    We are inviting a curated group of early users to shape Vakya&apos;s soul. No spam — just a direct line to the future of Indian voice AI.
+                    We are inviting a curated group of early users to shape Vakya's soul. No spam — just a direct line to the future of Indian voice AI.
                 </p>
             </section>
 
@@ -44,9 +44,9 @@ export default function ContactPage() {
                         <div className="flex justify-center">
                             <CheckCircle2 className="w-16 h-16 text-teal-400" />
                         </div>
-                        <h2 className="text-3xl font-black text-white">You&apos;re In.</h2>
+                        <h2 className="text-3xl font-black text-white">You're In.</h2>
                         <p className="text-slate-400 leading-relaxed max-w-sm mx-auto">
-                            Welcome to the Inner Circle. We&apos;ll reach out personally when your access is ready. Watch for Arjun. 🧘‍♂️
+                            Welcome to the Inner Circle. We'll reach out personally when your access is ready. Watch for Arjun. 🧘‍♂️
                         </p>
                     </div>
                 ) : (

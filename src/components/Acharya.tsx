@@ -25,7 +25,7 @@ export default function Acharya() {
                     <div className="space-y-4">
                         <h3 className="text-2xl font-black text-white leading-tight">Interact with your Master</h3>
                         <p className="text-slate-400 leading-relaxed">
-                            Acharya doesn&apos;t just respond; he guides. Trained on the deepest pedagogical roots for infinite patience.
+                            Acharya doesn't just respond; he guides. Trained on the deepest pedagogical roots for infinite patience.
                         </p>
                     </div>
                     <button className="w-full py-5 rounded-[2rem] bg-white text-black font-black text-lg hover:bg-slate-200 transition-all flex items-center justify-center gap-3">

@@ -24,7 +24,7 @@ const layers = [
         id: "personal",
         title: "Personal Vault",
         icon: <Lock className="w-6 h-6 text-purple-400" />,
-        desc: "Your proprietary &apos;Personal Logic&apos;. Zero-knowledge encryption. Local-first.",
+        desc: "Your proprietary 'Personal Logic'. Zero-knowledge encryption. Local-first.",
         status: "Memory Calibrated",
         color: "from-purple-500/20 to-transparent",
     },
@@ -36,7 +36,7 @@ export default function KnowledgeTrinity() {
             <div className="flex items-center justify-between mb-8">
                 <div>
                     <h2 className="text-3xl font-bold text-white tracking-tighter">Knowledge Trinity</h2>
-                    <p className="text-slate-400 text-sm">Orchestrate your agent&apos;s intelligence layers.</p>
+                    <p className="text-slate-400 text-sm">Orchestrate your agent's intelligence layers.</p>
                 </div>
                 <button className="p-3 rounded-full glass hover:bg-white/5 transition-all">
                     <Plus className="w-6 h-6 text-teal-500" />

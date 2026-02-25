@@ -141,7 +141,7 @@ export default function AppDashboard() {
                                 <div className="space-y-6">
                                     <div className="glass p-8 border-teal-500/10 rounded-[2.5rem] sticky top-0 bg-[#030712]/50">
                                         <h3 className="text-xl font-bold mb-4 tracking-tight text-white">Aura Inspector</h3>
-                                        <p className="text-sm text-slate-400 mb-8 leading-relaxed">Real-time verification of Arjun&apos;s responses against the Knowledge Trinity layers.</p>
+                                        <p className="text-sm text-slate-400 mb-8 leading-relaxed">Real-time verification of Arjun's responses against the Knowledge Trinity layers.</p>
                                         <div className="aspect-square rounded-[2rem] bg-black/40 border border-white/5 flex flex-col items-center justify-center text-center p-8 space-y-6 relative overflow-hidden">
                                             <div className="absolute inset-0 bg-gradient-to-t from-teal-500/5 to-transparent pointer-events-none" />
                                             <div className="w-12 h-12 rounded-full border-2 border-slate-800 border-t-teal-500 animate-spin" />

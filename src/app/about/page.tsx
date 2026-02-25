@@ -50,7 +50,7 @@ export default function AboutPage() {
                     Built for Bharat.<br />Built for the World.
                 </h1>
                 <p className="text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
-                    Vakya was born from a single question: <em>&quot;Why doesn&apos;t an AI exist that truly understands the Indian heart?&quot;</em>
+                    Vakya was born from a single question: <em>&quot;Why doesn't an AI exist that truly understands the Indian heart?&quot;</em>
                     Not just the language — the pause, the emotion, the cultural weight behind every word.
                 </p>
             </section>
@@ -60,7 +60,7 @@ export default function AboutPage() {
                 <div className="max-w-4xl mx-auto glass p-12 rounded-[3rem] border-teal-500/10 space-y-8">
                     <p className="text-xs font-black text-teal-400 uppercase tracking-widest text-center">The Manifesto</p>
                     <blockquote className="text-2xl md:text-3xl font-light italic text-white leading-relaxed text-center">
-                        &quot;Silence is the root of Dhvani. From silence, we heard what the world&apos;s AI systems missed — the soul of 1.4 billion voices. That is what we are building.&quot;
+                        &quot;Silence is the root of Dhvani. From silence, we heard what the world's AI systems missed — the soul of 1.4 billion voices. That is what we are building.&quot;
                     </blockquote>
                     <p className="text-slate-400 leading-relaxed text-center max-w-2xl mx-auto">
                         We believe the future of AI is sovereign, private, and deeply personal. Vakya is not a product — it is a new relationship between humans and technology. One built on trust, resonance, and respect.
@@ -123,7 +123,7 @@ export default function AboutPage() {
             <section className="px-6 py-24 text-center">
                 <div className="max-w-2xl mx-auto space-y-6">
                     <h2 className="text-4xl text-white">Be Part of the Beginning.</h2>
-                    <p className="text-slate-400">Join the early access list and help shape Vakya&apos;s soul.</p>
+                    <p className="text-slate-400">Join the early access list and help shape Vakya's soul.</p>
                     <Link href="/contact" className="btn-primary inline-flex mx-auto">
                         Join the Inner Circle <ArrowRight className="w-5 h-5" />
                     </Link>

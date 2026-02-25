@@ -100,7 +100,7 @@ export default function FeaturesPage() {
             <section className="px-6 py-20 text-center max-w-4xl mx-auto space-y-6">
                 <p className="text-xs font-black text-teal-400 uppercase tracking-widest">Full Capability Suite</p>
                 <h1 className="text-5xl md:text-6xl text-white">
-                    Everything You Need.<br />Nothing You Don&apos;t.
+                    Everything You Need.<br />Nothing You Don't.
                 </h1>
                 <p className="text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
                     Vakya is a full sovereign voice operating system. Not a feature — a transformation.
