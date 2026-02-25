@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { BookOpen, GraduationCap, Lightbulb, MessageSquare, Play, Sparkles, User, Brain } from "lucide-react";
+import { useState } from "react";
 
 export default function Acharya() {
     const [isSessionActive, setIsSessionActive] = useState(false);

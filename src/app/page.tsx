@@ -62,11 +62,11 @@ export default function Dashboard() {
               <p className="text-[10px] font-black text-teal-400 tracking-widest leading-none uppercase">Arjun Status</p>
               <div className="w-2 h-2 rounded-full bg-teal-500 animate-pulse shadow-[0_0_10px_rgba(20,184,166,1)]" />
             </div>
-            <p className="text-sm font-bold text-slate-300">Resonance: 251 Epochs</p>
+            <p className="text-sm font-bold text-slate-300">Resonance: 1,583 Epochs</p>
             <div className="w-full bg-white/5 h-1.5 rounded-full overflow-hidden">
               <motion.div
                 initial={{ width: 0 }}
-                animate={{ width: "45%" }}
+                animate={{ width: "88%" }}
                 transition={{ duration: 1.5, ease: "easeOut" }}
                 className="h-full bg-teal-500 shadow-[0_0_10px_rgba(20,184,166,0.5)]"
               />
