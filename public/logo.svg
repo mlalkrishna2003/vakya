@@ -1,0 +1,47 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="vishuddhaGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#14b8a6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Outer petals (16 lotus petals) -->
+  <g stroke="url(#vishuddhaGradient)" stroke-width="2" fill="none">
+    <!-- Top petal -->
+    <path d="M 100,30 Q 95,40 100,50 Q 105,40 100,30 Z"/>
+    <!-- Continuing around clockwise -->
+    <path d="M 120,35 Q 115,45 120,55 Q 125,45 120,35 Z"/>
+    <path d="M 138,45 Q 133,55 138,65 Q 143,55 138,45 Z"/>
+    <path d="M 152,60 Q 147,70 152,80 Q 157,70 152,60 Z"/>
+    <path d="M 162,78 Q 157,88 162,98 Q 167,88 162,78 Z"/>
+    <path d="M 168,98 Q 163,108 168,118 Q 173,108 168,98 Z"/>
+    <path d="M 170,120 Q 165,130 170,140 Q 175,130 170,120 Z"/>
+    <path d="M 165,142 Q 160,152 165,162 Q 170,152 165,142 Z"/>
+    <!-- Bottom -->
+    <path d="M 152,162 Q 147,152 142,162 Q 147,172 152,162 Z"/>
+    <!-- Left side -->
+    <path d="M 120,165 Q 115,155 110,165 Q 115,175 120,165 Z"/>
+    <path d="M 80,165 Q 75,155 70,165 Q 75,175 80,165 Z"/>
+    <path d="M 60,155 Q 55,145 50,155 Q 55,165 60,155 Z"/>
+    <path d="M 45,138 Q 40,128 35,138 Q 40,148 45,138 Z"/>
+    <path d="M 35,118 Q 30,108 25,118 Q 30,128 35,118 Z"/>
+    <path d="M 30,98 Q 25,88 20,98 Q 25,108 30,98 Z"/>
+    <path d="M 32,78 Q 27,68 22,78 Q 27,88 32,78 Z"/>
+  </g>
+  
+  <!-- Center inverted triangle (traditional Vishuddha symbol) -->
+  <path d="M 100,70 L 70,120 L 130,120 Z" 
+        stroke="url(#vishuddhaGradient)" 
+        stroke-width="2.5" 
+        fill="none"/>
+  
+  <!-- Concentric sound wave circles -->
+  <g stroke="url(#vishuddhaGradient)" stroke-width="1.5" fill="none">
+    <circle cx="100" cy="95" r="8"/>
+    <circle cx="100" cy="95" r="14"/>
+    <circle cx="100" cy="95" r="20"/>
+    <circle cx="100" cy="95" r="26"/>
+    <circle cx="100" cy="95" r="32"/>
+  </g>
+</svg>
