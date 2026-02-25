@@ -123,6 +123,37 @@ export default function Dashboard() {
                 className="grid grid-cols-1 xl:grid-cols-3 gap-12"
               >
                 <div className="xl:col-span-2 space-y-12">
+                  {/* Vakya MD - Featured Architect */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="glass p-8 rounded-[2.5rem] border-teal-500/20 bg-teal-500/5 relative overflow-hidden group border-2"
+                  >
+                    <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
+                      <Sparkles className="w-24 h-24 text-teal-500" />
+                    </div>
+                    <div className="relative z-10 flex flex-col md:flex-row items-center gap-8">
+                      <div className="w-24 h-24 rounded-3xl bg-teal-500 flex items-center justify-center font-black text-black text-4xl shadow-[0_0_40px_rgba(20,184,166,0.4)]">
+                        M
+                      </div>
+                      <div className="flex-1 space-y-2 text-center md:text-left">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/20 text-[10px] font-black text-teal-400 uppercase tracking-widest">
+                          Genesis Advisor
+                        </div>
+                        <h3 className="text-3xl font-black text-white tracking-tighter">Vakya MD</h3>
+                        <p className="text-slate-400 text-sm max-w-xl">
+                          Your master architect is ready. Consult Vakya MD to draft specialized neural blueprints or scale Arjun's Human Evolution.
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => setActiveView("nexus")}
+                        className="px-8 py-4 rounded-2xl bg-white text-black font-black text-sm uppercase tracking-widest hover:bg-teal-500 hover:text-white transition-all shadow-xl"
+                      >
+                        Consult MD
+                      </button>
+                    </div>
+                  </motion.div>
+
                   <KnowledgeTrinity />
                 </div>
                 <div className="space-y-6">
