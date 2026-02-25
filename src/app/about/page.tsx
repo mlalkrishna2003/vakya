@@ -4,11 +4,11 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 const milestones = [
-    { date: "Jan 2026", event: "Project Inception — The first line of Arjun's neural architecture written." },
-    { date: "Feb 2026", event: "285,000 training iterations complete. Arjun achieves human-level prosody." },
-    { date: "Feb 25, 2026", event: "Dhvani OS Alpha launched. Voice Studio, Vault, and Personas go live." },
-    { date: "Mar 2026", event: "Quantum Distillation completes. Arjun achieves Resonance Lock." },
-    { date: "Apr 2026", event: "Vakya Public Beta — open to the world." },
+    { date: "Jan 28, 2026", event: "Day 0 — First line of code. Arjun's neural architecture conceived, A6000 GPU spun up.", done: true },
+    { date: "Feb 10, 2026", event: "Phase 1 complete. 285,000 training iterations. Arjun speaks for the first time.", done: true },
+    { date: "Feb 25, 2026", event: "Dhvani OS Alpha live. Voice Studio, Personas, Vault, and Knowledge Hub go live.", done: true, current: true },
+    { date: "Feb 28, 2026", event: "Quantum Distillation completes. Resonance Lock achieved at Epoch 800.", done: false },
+    { date: "Mar 1, 2026", event: "Vakya goes public — open to the world. 32 days from code to launch.", done: false },
 ];
 
 const values = [
@@ -41,7 +41,9 @@ export default function AboutPage() {
             {/* ── HERO ── */}
             <section className="px-6 py-20 text-center max-w-4xl mx-auto space-y-6">
                 <div className="flex justify-center">
-                    <Image src="/logo.svg" alt="Vakya" width={60} height={60} />
+                    <div className="relative w-20 h-20 rounded-full overflow-hidden border border-teal-500/30 shadow-[0_0_30px_rgba(20,184,166,0.25)]">
+                        <Image src="/logo.png" alt="Vakya" fill sizes="80px" className="object-cover object-center" />
+                    </div>
                 </div>
                 <p className="text-xs font-black text-teal-400 uppercase tracking-widest">Our Story</p>
                 <h1 className="text-5xl md:text-6xl text-white">
@@ -68,17 +70,30 @@ export default function AboutPage() {
 
             {/* ── TIMELINE ── */}
             <section className="px-6 py-20 max-w-4xl mx-auto">
-                <p className="text-xs font-black text-teal-400 uppercase tracking-widest mb-12">Journey</p>
+                <div className="flex items-center justify-between mb-12">
+                    <p className="text-xs font-black text-teal-400 uppercase tracking-widest">Journey</p>
+                    <span className="text-xs text-slate-500">Jan 28 → Mar 1 · 32 days</span>
+                </div>
                 <div className="relative space-y-8">
                     <div className="absolute left-[15px] top-2 bottom-2 w-px bg-gradient-to-b from-teal-500/50 to-transparent" />
                     {milestones.map((m, i) => (
                         <div key={i} className="flex gap-8 items-start pl-10 relative">
-                            <div className="absolute left-0 top-1.5 w-[30px] h-[30px] rounded-full bg-teal-500/20 border border-teal-500/50 flex items-center justify-center">
-                                <div className="w-2 h-2 rounded-full bg-teal-400" />
+                            <div className={`absolute left-0 top-1.5 w-[30px] h-[30px] rounded-full flex items-center justify-center border ${m.current ? 'bg-teal-500/40 border-teal-400 shadow-[0_0_12px_rgba(20,184,166,0.5)]' :
+                                    m.done ? 'bg-teal-500/20 border-teal-500/50' :
+                                        'bg-slate-800/60 border-white/10'
+                                }`}>
+                                <div className={`w-2 h-2 rounded-full ${m.current ? 'bg-teal-300 animate-pulse' :
+                                        m.done ? 'bg-teal-400' : 'bg-slate-600'
+                                    }`} />
                             </div>
                             <div>
-                                <p className="text-[10px] font-black text-teal-400 uppercase tracking-widest mb-1">{m.date}</p>
-                                <p className="text-slate-300 leading-relaxed">{m.event}</p>
+                                <div className="flex items-center gap-2 mb-1">
+                                    <p className={`text-[10px] font-black uppercase tracking-widest ${m.current ? 'text-teal-300' : m.done ? 'text-teal-400' : 'text-slate-500'
+                                        }`}>{m.date}</p>
+                                    {m.current && <span className="text-[8px] font-black bg-teal-500/20 text-teal-300 px-2 py-0.5 rounded-full uppercase tracking-widest">Live Now</span>}
+                                    {!m.done && !m.current && <span className="text-[8px] font-black bg-slate-800/60 text-slate-500 px-2 py-0.5 rounded-full uppercase tracking-widest">Upcoming</span>}
+                                </div>
+                                <p className={`leading-relaxed text-sm ${m.done || m.current ? 'text-slate-300' : 'text-slate-500'}`}>{m.event}</p>
                             </div>
                         </div>
                     ))}

@@ -64,7 +64,9 @@ export default function AppDashboard() {
             {/* Sidebar - Desktop */}
             <aside className="w-80 border-r border-white/5 hidden lg:flex flex-col p-8 space-y-12 shrink-0 h-screen sticky top-0">
                 <div className="flex items-center gap-3 group cursor-pointer" onClick={() => setActiveView("overview")}>
-                    <Image src="/logo.svg" alt="Vakya" width={40} height={40} className="group-hover:scale-110 transition-transform" />
+                    <div className="relative w-10 h-10 rounded-full overflow-hidden border border-teal-500/30 shrink-0">
+                        <Image src="/logo.png" alt="Vakya" fill sizes="40px" className="object-cover object-center" />
+                    </div>
                     <span className="text-2xl font-black tracking-tighter">DHVANI</span>
                 </div>
 
@@ -86,7 +88,7 @@ export default function AppDashboard() {
                             <p className="text-[10px] font-black text-teal-400 tracking-widest uppercase">Arjun Status</p>
                             <div className="w-2 h-2 rounded-full bg-teal-500 animate-pulse shadow-[0_0_10px_rgba(20,184,166,1)]" />
                         </div>
-                        <p className="text-sm font-bold text-slate-300">Resonance: 265+ Epochs</p>
+                        <p className="text-sm font-bold text-slate-300">Resonance: 274+ Epochs</p>
                         <div className="w-full bg-white/5 h-1.5 rounded-full overflow-hidden">
                             <motion.div
                                 initial={{ width: 0 }}
@@ -108,7 +110,7 @@ export default function AppDashboard() {
 
             {/* Main Content */}
             <main className="flex-1 p-6 md:p-12 overflow-y-auto">
-                <header className="flex items-center justify-between mb-16 max-w-7xl mx-auto">
+                <header className="flex items-center justify-between mb-8 md:mb-16 max-w-7xl mx-auto">
                     <div className="space-y-1">
                         <motion.h1
                             initial={{ opacity: 0, y: 10 }}
