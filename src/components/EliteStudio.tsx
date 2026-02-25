@@ -1,9 +1,30 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Sliders, Zap, Brain, Cpu, Music, Share2, Layers, Sparkles } from "lucide-react";
+import { Zap, Brain, Cpu, Music, Share2, Layers } from "lucide-react";
+import { useState } from "react";
 
 export default function EliteStudio() {
+    const [isSculpting, setIsSculpting] = useState(false);
+    const [sculptStatus, setSculptStatus] = useState<string | null>(null);
+    const [stats, setStats] = useState({ cpu: 12, thrm: 55 });
+
+    const handleSculpt = () => {
+        setIsSculpting(true);
+        setSculptStatus("Neural Alignment Initiated...");
+        setStats({ cpu: 88, thrm: 72 });
+
+        setTimeout(() => setSculptStatus("Calibrating Bhaava-Weights..."), 1500);
+        setTimeout(() => setStats({ cpu: 94, thrm: 79 }), 2000);
+        setTimeout(() => setSculptStatus("Finalizing Quantum Resonance..."), 3000);
+        setTimeout(() => {
+            setIsSculpting(false);
+            setSculptStatus("Calibration Complete.");
+            setStats({ cpu: 12, thrm: 55 });
+            setTimeout(() => setSculptStatus(null), 3000);
+        }, 4500);
+    };
+
     return (
         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
@@ -17,6 +38,17 @@ export default function EliteStudio() {
                         The command center for deep neural sculpting. Calibrate the soul of your voice with quantum precision.
                     </p>
                 </div>
+
+                {sculptStatus && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="flex items-center gap-3 px-4 py-2 rounded-xl bg-amber-500/10 border border-amber-500/20"
+                    >
+                        <div className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+                        <span className="text-[10px] font-black text-amber-500 uppercase tracking-widest">{sculptStatus}</span>
+                    </motion.div>
+                )}
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -36,8 +68,12 @@ export default function EliteStudio() {
                                 </div>
                             </div>
                             <div className="flex gap-2">
-                                <div className="px-3 py-1 rounded-lg bg-black/40 border border-white/5 text-[10px] font-mono text-amber-500">CPU: 12%</div>
-                                <div className="px-3 py-1 rounded-lg bg-black/40 border border-white/5 text-[10px] font-mono text-amber-500">THRM: 55°C</div>
+                                <div className="px-3 py-1 rounded-lg bg-black/40 border border-white/5 text-[10px] font-mono text-amber-500 transition-colors duration-500">
+                                    CPU: {stats.cpu}%
+                                </div>
+                                <div className="px-3 py-1 rounded-lg bg-black/40 border border-white/5 text-[10px] font-mono text-amber-500 transition-colors duration-500">
+                                    THRM: {stats.thrm}°C
+                                </div>
                             </div>
                         </div>
 
@@ -52,8 +88,12 @@ export default function EliteStudio() {
                                 <ControlKnob label="Resonance" value="Elite" />
                                 <ControlKnob label="Indic-Sync" value="100%" />
                             </div>
-                            <button className="px-10 py-5 rounded-[2rem] bg-amber-500 text-black font-black text-lg shadow-[0_0_30px_rgba(245,158,11,0.4)] hover:scale-105 transition-all active:scale-95">
-                                SCULPT AUDIO
+                            <button
+                                onClick={handleSculpt}
+                                disabled={isSculpting}
+                                className="px-10 py-5 rounded-[2rem] bg-amber-500 text-black font-black text-lg shadow-[0_0_30px_rgba(245,158,11,0.4)] hover:scale-105 transition-all active:scale-95 disabled:opacity-50 disabled:hover:scale-100"
+                            >
+                                {isSculpting ? "SCULPTING..." : "SCULPT AUDIO"}
                             </button>
                         </div>
                     </div>
@@ -64,9 +104,9 @@ export default function EliteStudio() {
                     <div className="glass p-8 rounded-[2.5rem] border-white/5 space-y-8">
                         <h4 className="text-xs font-bold text-slate-500 uppercase tracking-widest">Advanced parameters</h4>
                         <div className="space-y-6">
-                            <EliteSlider icon={<Music className="w-4 h-4" />} label="Harmonics" progress="70%" />
-                            <EliteSlider icon={<Layers className="w-4 h-4" />} label="Sub-Epochs" progress="1,200" />
-                            <EliteSlider icon={<Cpu className="w-4 h-4" />} label="Neural Weight" progress="Auto" />
+                            <EliteSlider icon={<Music className="w-4 h-4" />} label="Harmonics" progress="70%" active={isSculpting} />
+                            <EliteSlider icon={<Layers className="w-4 h-4" />} label="Sub-Epochs" progress="1,200" active={isSculpting} />
+                            <EliteSlider icon={<Cpu className="w-4 h-4" />} label="Neural Weight" progress="Auto" active={isSculpting} />
                         </div>
                     </div>
 
@@ -95,7 +135,14 @@ function ControlKnob({ label, value }: { label: string, value: string }) {
     );
 }
 
-function EliteSlider({ icon, label, progress }: any) {
+interface EliteSliderProps {
+    icon: React.ReactNode;
+    label: string;
+    progress: string;
+    active?: boolean;
+}
+
+function EliteSlider({ icon, label, progress, active }: EliteSliderProps) {
     return (
         <div className="space-y-3">
             <div className="flex justify-between items-center">
@@ -106,7 +153,19 @@ function EliteSlider({ icon, label, progress }: any) {
                 <span className="text-[10px] font-mono text-white">{progress}</span>
             </div>
             <div className="w-full bg-white/5 h-1 rounded-full overflow-hidden">
-                <div className="w-1/2 h-full bg-amber-500/50 shadow-[0_0_10px_rgba(245,158,11,0.5)]" />
+                <motion.div
+                    initial={{ width: "50%" }}
+                    animate={{
+                        width: active ? ["40%", "90%", "60%"] : "50%",
+                        opacity: active ? [0.5, 1, 0.5] : 0.5
+                    }}
+                    transition={{
+                        duration: 2,
+                        repeat: active ? Infinity : 0,
+                        repeatType: "reverse"
+                    }}
+                    className="h-full bg-amber-500/50 shadow-[0_0_10px_rgba(245,158,11,0.5)]"
+                />
             </div>
         </div>
     );

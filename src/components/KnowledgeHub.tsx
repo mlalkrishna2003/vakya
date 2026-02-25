@@ -44,6 +44,27 @@ const packs = [
 
 export default function KnowledgeHub() {
     const [activeCat, setActiveCat] = useState("all");
+    const [installing, setInstalling] = useState<Record<string, number>>({});
+    const [installed, setInstalled] = useState<Record<string, boolean>>({});
+
+    const handleDownload = (packId: string) => {
+        if (installed[packId] || installing[packId] !== undefined) return;
+
+        setInstalling(prev => ({ ...prev, [packId]: 0 }));
+
+        const interval = setInterval(() => {
+            setInstalling(prev => {
+                const currentProgress = prev[packId];
+                if (currentProgress >= 100) {
+                    clearInterval(interval);
+                    setInstalled(over => ({ ...over, [packId]: true }));
+                    const { [packId]: _unused, ...rest } = prev;
+                    return rest;
+                }
+                return { ...prev, [packId]: currentProgress + 10 };
+            });
+        }, 300);
+    };
 
     return (
         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -68,7 +89,10 @@ export default function KnowledgeHub() {
                             className="w-full bg-white/5 border border-white/10 rounded-2xl py-3 pl-11 pr-4 text-sm focus:outline-none focus:border-teal-500/50 transition-all"
                         />
                     </div>
-                    <button className="p-3 rounded-2xl glass hover:bg-white/5 transition-all">
+                    <button
+                        aria-label="Filter Sectors"
+                        className="p-3 rounded-2xl glass hover:bg-white/5 transition-all"
+                    >
                         <Filter className="w-5 h-5 text-slate-400" />
                     </button>
                 </div>
@@ -109,14 +133,30 @@ export default function KnowledgeHub() {
                             {pack.desc}
                         </p>
 
-                        <div className="flex items-center justify-between pt-4 border-t border-white/5">
-                            <div className="flex items-center gap-1.5">
-                                <CheckCircle2 className="w-4 h-4 text-teal-500" />
-                                <span className="text-xs font-bold text-slate-300">{pack.downloads} Users</span>
+                        <div className="flex flex-col gap-4 pt-4 border-t border-white/5">
+                            {installing[pack.id] !== undefined && (
+                                <div className="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
+                                    <motion.div
+                                        initial={{ width: 0 }}
+                                        animate={{ width: `${installing[pack.id]}%` }}
+                                        className="h-full bg-teal-500"
+                                    />
+                                </div>
+                            )}
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-1.5">
+                                    <CheckCircle2 className="w-4 h-4 text-teal-500" />
+                                    <span className="text-xs font-bold text-slate-300">{pack.downloads} Users</span>
+                                </div>
+                                <button
+                                    onClick={() => handleDownload(pack.id)}
+                                    disabled={installed[pack.id] || installing[pack.id] !== undefined}
+                                    className={`p-3 rounded-xl transition-all group/btn ${installed[pack.id] ? 'bg-teal-500/20 text-teal-500' : 'bg-white/5 hover:bg-teal-500 hover:text-black'
+                                        }`}
+                                >
+                                    {installed[pack.id] ? <CheckCircle2 className="w-5 h-5" /> : <Download className="w-5 h-5" />}
+                                </button>
                             </div>
-                            <button className="p-3 rounded-xl bg-white/5 hover:bg-teal-500 hover:text-black transition-all group/btn">
-                                <Download className="w-5 h-5" />
-                            </button>
                         </div>
                     </div>
                 ))}

@@ -1,9 +1,26 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Code2, Plus, Terminal, CPU, Globe, GitBranch, Sparkles, BookOpen } from "lucide-react";
+import { Code2, Plus, Terminal, Sparkles, BookOpen } from "lucide-react";
+import { useState } from "react";
 
 export default function Nexus() {
+    const [isDeploying, setIsDeploying] = useState(false);
+    const [status, setStatus] = useState<string | null>(null);
+
+    const handleDeploy = () => {
+        setIsDeploying(true);
+        setStatus("Provisioning Pulse-X Node...");
+
+        setTimeout(() => setStatus("Injecting Neural weights..."), 1500);
+        setTimeout(() => setStatus("Warming High-Frequency Bridge..."), 3000);
+        setTimeout(() => {
+            setIsDeploying(false);
+            setStatus("Agent Specialized.");
+            setTimeout(() => setStatus(null), 3000);
+        }, 4500);
+    };
+
     return (
         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
@@ -17,10 +34,30 @@ export default function Nexus() {
                         Forge new Sovereign Agents. Deploy neural architectures directly to the Local Pulse Cluster.
                     </p>
                 </div>
-                <button className="flex items-center gap-2 px-6 py-3 rounded-2xl bg-blue-500 text-white font-bold shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:scale-105 transition-all">
-                    <Plus className="w-5 h-5" />
-                    New Agent
-                </button>
+
+                <div className="flex items-center gap-4">
+                    {status && (
+                        <motion.span
+                            initial={{ opacity: 0, x: 10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            className={`text-[10px] font-black uppercase tracking-widest ${status.includes('Specialized') ? 'text-teal-400' : 'text-blue-400'}`}
+                        >
+                            {status}
+                        </motion.span>
+                    )}
+                    <button
+                        onClick={handleDeploy}
+                        disabled={isDeploying}
+                        className="flex items-center gap-2 px-6 py-3 rounded-2xl bg-blue-500 text-white font-bold shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:scale-105 transition-all active:scale-95 disabled:opacity-50 disabled:hover:scale-100"
+                    >
+                        {isDeploying ? (
+                            <div className="w-5 h-5 border-2 border-white border-t-transparent animate-spin rounded-full" />
+                        ) : (
+                            <Plus className="w-5 h-5" />
+                        )}
+                        {isDeploying ? "DEPLOYING..." : "New Agent"}
+                    </button>
+                </div>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -80,7 +117,7 @@ export default function Nexus() {
                             <span className="text-xs font-bold uppercase tracking-widest">Pro-Tip</span>
                         </div>
                         <p className="text-sm text-slate-400 leading-relaxed italic">
-                            "Use the Pulse-X architecture for agents requiring real-time Indic translation on local CPU clusters."
+                            &quot;Use the Pulse-X architecture for agents requiring real-time Indic translation on local CPU clusters.&quot;
                         </p>
                     </div>
                 </div>
@@ -102,7 +139,13 @@ export default function Nexus() {
     );
 }
 
-function ArchCard({ title, desc, tags }: any) {
+interface ArchCardProps {
+    title: string;
+    desc: string;
+    tags: string[];
+}
+
+function ArchCard({ title, desc, tags }: ArchCardProps) {
     return (
         <div className="p-6 rounded-3xl bg-white/5 border border-white/5 hover:border-blue-500/20 transition-all cursor-pointer group">
             <h4 className="text-lg font-bold text-white group-hover:text-blue-400 transition-colors">{title}</h4>
@@ -116,7 +159,12 @@ function ArchCard({ title, desc, tags }: any) {
     );
 }
 
-function DocLink({ title, detail }: any) {
+interface DocLinkProps {
+    title: string;
+    detail: string;
+}
+
+function DocLink({ title, detail }: DocLinkProps) {
     return (
         <div className="p-6 rounded-[2rem] bg-black/40 border border-white/5 hover:bg-black/60 transition-all cursor-pointer">
             <p className="text-sm font-bold text-white mb-1">{title}</p>

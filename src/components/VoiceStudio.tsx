@@ -6,6 +6,21 @@ import { useState } from "react";
 
 export default function VoiceStudio() {
     const [emotion, setEmotion] = useState("Neutral");
+    const [isGenerating, setIsGenerating] = useState(false);
+    const [status, setStatus] = useState<string | null>(null);
+
+    const handleGenerate = () => {
+        setIsGenerating(true);
+        setStatus("Initializing Neural Weights...");
+
+        setTimeout(() => setStatus("Synthesizing Phonemes..."), 1000);
+        setTimeout(() => setStatus("Calibrating Resonance..."), 2000);
+        setTimeout(() => {
+            setIsGenerating(false);
+            setStatus("Generation Complete.");
+            setTimeout(() => setStatus(null), 3000);
+        }, 3500);
+    };
 
     return (
         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -35,7 +50,12 @@ export default function VoiceStudio() {
                             <div className="flex gap-4">
                                 <div className="flex flex-col gap-1.5">
                                     <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Emotion</span>
-                                    <select className="bg-black/40 border border-white/10 rounded-xl px-4 py-2 text-sm text-teal-400 font-bold focus:outline-none">
+                                    <select
+                                        value={emotion}
+                                        onChange={(e) => setEmotion(e.target.value)}
+                                        aria-label="Select Emotion"
+                                        className="bg-black/40 border border-white/10 rounded-xl px-4 py-2 text-sm text-teal-400 font-bold focus:outline-none cursor-pointer"
+                                    >
                                         <option>Neutral</option>
                                         <option>Fierce</option>
                                         <option>Calm</option>
@@ -44,7 +64,10 @@ export default function VoiceStudio() {
                                 </div>
                                 <div className="flex flex-col gap-1.5">
                                     <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Language</span>
-                                    <select className="bg-black/40 border border-white/10 rounded-xl px-4 py-2 text-sm text-white focus:outline-none">
+                                    <select
+                                        aria-label="Select Language"
+                                        className="bg-black/40 border border-white/10 rounded-xl px-4 py-2 text-sm text-white focus:outline-none cursor-pointer"
+                                    >
                                         <option>English (IN)</option>
                                         <option>Hindi</option>
                                         <option>Telugu</option>
@@ -53,10 +76,29 @@ export default function VoiceStudio() {
                                 </div>
                             </div>
 
-                            <button className="px-8 py-4 rounded-2xl bg-teal-500 text-black font-black flex items-center gap-2 shadow-[0_0_20px_rgba(20,184,166,0.3)] hover:scale-105 transition-all">
-                                <Play className="w-5 h-5 fill-current" />
-                                GENERATE AUDIO
-                            </button>
+                            <div className="flex items-center gap-4">
+                                {status && (
+                                    <motion.span
+                                        initial={{ opacity: 0, x: 10 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        className={`text-[10px] font-bold uppercase tracking-widest ${status.includes('Complete') ? 'text-teal-400' : 'text-slate-500'}`}
+                                    >
+                                        {status}
+                                    </motion.span>
+                                )}
+                                <button
+                                    onClick={handleGenerate}
+                                    disabled={isGenerating}
+                                    className="px-8 py-4 rounded-2xl bg-teal-500 text-black font-black flex items-center gap-2 shadow-[0_0_20px_rgba(20,184,166,0.3)] hover:scale-105 transition-all active:scale-95 disabled:opacity-50 disabled:hover:scale-100"
+                                >
+                                    {isGenerating ? (
+                                        <div className="w-5 h-5 border-2 border-black border-t-transparent animate-spin rounded-full" />
+                                    ) : (
+                                        <Play className="w-5 h-5 fill-current" />
+                                    )}
+                                    {isGenerating ? "GENERATING..." : "GENERATE AUDIO"}
+                                </button>
+                            </div>
                         </div>
                     </div>
 
@@ -69,12 +111,12 @@ export default function VoiceStudio() {
                             {[40, 70, 45, 90, 65, 30, 85, 50, 75, 40, 60, 80, 45, 70, 55, 90, 35, 80, 50, 65, 40, 70, 45, 90, 65, 30, 85, 50, 75, 40, 60, 80, 45, 70, 55, 90, 35, 80, 50, 65].map((height, i) => (
                                 <motion.div
                                     key={i}
-                                    className="flex-1 bg-teal-500/20 rounded-full"
+                                    className={`flex-1 rounded-full transition-colors duration-500 ${isGenerating ? 'bg-teal-400' : 'bg-teal-500/20'}`}
                                     initial={{ height: "20%" }}
-                                    animate={{ height: `${height}%` }}
+                                    animate={{ height: isGenerating ? `${height}%` : "20%" }}
                                     transition={{
                                         duration: 0.5,
-                                        repeat: Infinity,
+                                        repeat: isGenerating ? Infinity : 0,
                                         repeatType: "reverse",
                                         delay: i * 0.05
                                     }}
@@ -110,7 +152,13 @@ export default function VoiceStudio() {
     );
 }
 
-function Slider({ icon, label, value }: any) {
+interface SliderProps {
+    icon: React.ReactNode;
+    label: string;
+    value: string;
+}
+
+function Slider({ icon, label, value }: SliderProps) {
     return (
         <div className="space-y-3">
             <div className="flex justify-between items-center text-xs">

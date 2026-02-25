@@ -2,38 +2,54 @@
 
 import { motion } from "framer-motion";
 import { Users, UserPlus, Heart, Zap, Shield, User } from "lucide-react";
+"use client";
 
-const personas = [
-    {
-        id: "arjun-v1",
-        name: "Arjun V1",
-        role: "The Flagship Sovereign",
-        desc: "1,500 Epochs of calibrated resonance. Designed for elite executive orchestration and stoic wisdom.",
-        stats: { resonance: "98.4%", latency: "0.4s", empathy: "Elite" },
-        color: "from-teal-500/20 to-transparent",
-        icon: <Shield className="w-6 h-6 text-teal-400" />,
-    },
-    {
-        id: "acharya",
-        name: "Acharya",
-        role: "The Master Teacher",
-        desc: "Trained on pedagogical traditions and classic Indic texts. Forged for infinite patience and knowledge transfer.",
-        stats: { resonance: "96.2%", latency: "0.5s", empathy: "High" },
-        color: "from-blue-500/20 to-transparent",
-        icon: <User className="w-6 h-6 text-blue-400" />,
-    },
-    {
-        id: "kathakar",
-        name: "Kathakar",
-        role: "The Storyteller",
-        desc: "Master of regional dialects and narrative rhythm. Captures the soul of oral traditions with deep resonance.",
-        stats: { resonance: "97.8%", latency: "0.5s", empathy: "Max" },
-        color: "from-amber-500/20 to-transparent",
-        icon: <Heart className="w-6 h-6 text-amber-400" />,
-    },
-];
+import { motion } from "framer-motion";
+import { Users, UserPlus, Heart, Zap, Shield, User } from "lucide-react";
+import { useState } from "react";
 
 export default function Personas() {
+    const [activePersona, setActivePersona] = useState("arjun-v1");
+    const [isSwitching, setIsSwitching] = useState<string | null>(null);
+
+    const switchPersona = (id: string) => {
+        if (id === activePersona || isSwitching) return;
+        setIsSwitching(id);
+        setTimeout(() => {
+            setActivePersona(id);
+            setIsSwitching(null);
+        }, 1500);
+    };
+
+    const personas = [
+        {
+            id: "arjun-v1",
+            name: "Arjun V1",
+            role: "The Flagship Sovereign",
+            desc: "1,500 Epochs of calibrated resonance. Designed for elite executive orchestration and stoic wisdom.",
+            stats: { resonance: "98.4%", latency: "0.4s", empathy: "Elite" },
+            color: "from-teal-500/20 to-transparent",
+            icon: <Shield className="w-6 h-6 text-teal-400" />,
+        },
+        {
+            id: "acharya",
+            name: "Acharya",
+            role: "The Master Teacher",
+            desc: "Trained on pedagogical traditions and classic Indic texts. Forged for infinite patience and knowledge transfer.",
+            stats: { resonance: "96.2%", latency: "0.5s", empathy: "High" },
+            color: "from-blue-500/20 to-transparent",
+            icon: <User className="w-6 h-6 text-blue-400" />,
+        },
+        {
+            id: "kathakar",
+            name: "Kathakar",
+            role: "The Storyteller",
+            desc: "Master of regional dialects and narrative rhythm. Captures the soul of oral traditions with deep resonance.",
+            stats: { resonance: "97.8%", latency: "0.5s", empathy: "Max" },
+            color: "from-amber-500/20 to-transparent",
+            icon: <Heart className="w-6 h-6 text-amber-400" />,
+        },
+    ];
     return (
         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
@@ -57,19 +73,24 @@ export default function Personas() {
                 {personas.map((persona, index) => (
                     <motion.div
                         key={persona.id}
+                        onClick={() => switchPersona(persona.id)}
                         initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
+                        animate={{
+                            opacity: activePersona === persona.id ? 1 : 0.6,
+                            y: 0,
+                            scale: isSwitching === persona.id ? 0.98 : 1
+                        }}
                         transition={{ delay: index * 0.1 }}
-                        className={`glass p-8 rounded-[2.5rem] border-white/5 hover:border-white/10 transition-all flex flex-col group relative overflow-hidden bg-gradient-to-br ${persona.color}`}
+                        className={`glass p-8 rounded-[2.5rem] border-white/5 hover:border-white/10 transition-all flex flex-col group relative overflow-hidden bg-gradient-to-br ${persona.color} cursor-pointer ${activePersona === persona.id ? 'border-teal-500/30' : ''}`}
                     >
                         <div className="flex justify-between items-start mb-6">
                             <div className="w-14 h-14 rounded-2xl bg-black/40 border border-white/5 flex items-center justify-center group-hover:scale-110 transition-all">
-                                {persona.icon}
+                                {isSwitching === persona.id ? <div className="w-6 h-6 border-2 border-teal-500 border-t-transparent animate-spin rounded-full" /> : persona.icon}
                             </div>
                             <div className="text-right">
-                                <div className="flex items-center gap-1.5 text-teal-500 font-bold text-xs uppercase tracking-widest">
-                                    <Zap className="w-3 h-3" />
-                                    Active
+                                <div className={`flex items-center gap-1.5 font-bold text-xs uppercase tracking-widest ${activePersona === persona.id ? 'text-teal-500' : 'text-slate-500'}`}>
+                                    <Zap className={`w-3 h-3 ${activePersona === persona.id ? 'animate-pulse' : ''}`} />
+                                    {activePersona === persona.id ? 'Active' : 'Standby'}
                                 </div>
                             </div>
                         </div>

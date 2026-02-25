@@ -2,35 +2,57 @@
 
 import { motion } from "framer-motion";
 import { Globe, Microscope, Lock, Plus, ChevronRight } from "lucide-react";
+"use client";
 
-const layers = [
-    {
-        id: "universal",
-        title: "Universal Baseline",
-        icon: <Globe className="w-6 h-6 text-blue-400" />,
-        desc: "1,200 Epochs of verified wisdom. The core moral and cultural compass.",
-        status: "Neural Core Locked",
-        color: "from-blue-500/20 to-transparent",
-    },
-    {
-        id: "domain",
-        title: "Indic Heritage",
-        icon: <Microscope className="w-6 h-6 text-teal-400" />,
-        desc: "Regional master layers (Hindi, Tamil, Telugu). Forged for deep resonance.",
-        status: "Heritage Active",
-        color: "from-teal-500/20 to-transparent",
-    },
-    {
-        id: "personal",
-        title: "Personal Vault",
-        icon: <Lock className="w-6 h-6 text-purple-400" />,
-        desc: "Your proprietary &apos;Personal Logic&apos;. Zero-knowledge encryption. Local-first.",
-        status: "Memory Calibrated",
-        color: "from-purple-500/20 to-transparent",
-    },
-];
+import { motion } from "framer-motion";
+import { Globe, Microscope, Lock, Plus, ChevronRight } from "lucide-react";
+import { useState } from "react";
 
 export default function KnowledgeTrinity() {
+    const [activating, setActivating] = useState<string | null>(null);
+    const [activeLayers, setActiveLayers] = useState<Record<string, boolean>>({
+        universal: true,
+        heritage: true,
+        personal: true
+    });
+
+    const toggleLayer = (id: string) => {
+        setActivating(id);
+        setTimeout(() => {
+            setActiveLayers((prev: Record<string, boolean>) => ({ ...prev, [id]: !prev[id] }));
+            setActivating(null);
+        }, 2000);
+    };
+
+    const layers = [
+        {
+            id: "universal",
+            title: "Universal Baseline",
+            icon: <Globe className="w-6 h-6 text-blue-400" />,
+            desc: "1,200 Epochs of verified wisdom. The core moral and cultural compass.",
+            status: activeLayers.universal ? "Neural Core Locked" : "Core Dissociated",
+            color: "from-blue-500/20 to-transparent",
+            active: activeLayers.universal
+        },
+        {
+            id: "heritage",
+            title: "Indic Heritage",
+            icon: <Microscope className="w-6 h-6 text-teal-400" />,
+            desc: "Regional master layers (Hindi, Tamil, Telugu). Forged for deep resonance.",
+            status: activeLayers.heritage ? "Heritage Active" : "Lineage Suspended",
+            color: "from-teal-500/20 to-transparent",
+            active: activeLayers.heritage
+        },
+        {
+            id: "personal",
+            title: "Personal Vault",
+            icon: <Lock className="w-6 h-6 text-purple-400" />,
+            desc: "Your proprietary &apos;Personal Logic&apos;. Zero-knowledge encryption. Local-first.",
+            status: activeLayers.personal ? "Memory Calibrated" : "Sync Disabled",
+            color: "from-purple-500/20 to-transparent",
+            active: activeLayers.personal
+        },
+    ];
     return (
         <div className="space-y-6">
             <div className="flex items-center justify-between mb-8">
@@ -38,7 +60,10 @@ export default function KnowledgeTrinity() {
                     <h2 className="text-3xl font-bold text-white tracking-tighter">Knowledge Trinity</h2>
                     <p className="text-slate-400 text-sm">Orchestrate your agent&apos;s intelligence layers.</p>
                 </div>
-                <button className="p-3 rounded-full glass hover:bg-white/5 transition-all">
+                <button
+                    aria-label="Add Knowledge Layer"
+                    className="p-3 rounded-full glass hover:bg-white/5 transition-all"
+                >
                     <Plus className="w-6 h-6 text-teal-500" />
                 </button>
             </div>

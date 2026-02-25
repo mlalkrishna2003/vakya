@@ -1,9 +1,37 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { ShieldCheck, Cpu, Zap, Lock, EyeOff, AlertCircle } from "lucide-react";
+import { useState, useEffect } from "react";
 
 export default function Security() {
+    const [logs, setLogs] = useState([
+        { time: "12:45:01", event: "Sovereign Handshake", detail: "Local-Only Verification", status: "Verified" },
+        { time: "12:40:55", event: "Neural Weight Lock", detail: "Enclave 0x721fb.. Hardened", status: "Success" },
+        { time: "12:32:12", event: "External Request", detail: "Blocked by Cloak", status: "Deflected" },
+        { time: "12:15:30", event: "Voice-ID Access", detail: "Biometric Match Found", status: "Authorized" }
+    ]);
+
+    useEffect(() => {
+        const events = [
+            { event: "Pulse Sync", detail: "Node Sync Complete", status: "Success" },
+            { event: "Enclave Refresh", detail: "Keys Rotated", status: "Verified" },
+            { event: "Ghost Mode", detail: "Identity Masked", status: "Success" }
+        ];
+
+        const interval = setInterval(() => {
+            const randomEvent = events[Math.floor(Math.random() * events.length)];
+            const now = new Date();
+            const timeStr = now.toTimeString().split(' ')[0];
+
+            setLogs(prev => [
+                { time: timeStr, ...randomEvent },
+                ...prev.slice(0, 5)
+            ]);
+        }, 5000);
+
+        return () => clearInterval(interval);
+    }, []);
+
     return (
         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
             <div className="space-y-2">
@@ -45,10 +73,9 @@ export default function Security() {
                         </div>
 
                         <div className="space-y-6">
-                            <AuditLog time="12:45:01" event="Sovereign Handshake" detail="Local-Only Verification" status="Verified" />
-                            <AuditLog time="12:40:55" event="Neural Weight Lock" detail="Enclave 0x721fb.. Hardened" status="Success" />
-                            <AuditLog time="12:32:12" event="External Request" detail="Blocked by Cloak" status="Deflected" />
-                            <AuditLog time="12:15:30" event="Voice-ID Access" detail="Biometric Match Found" status="Authorized" />
+                            {logs.map((log, i: number) => (
+                                <AuditLog key={`${log.time}-${i}`} {...log} />
+                            ))}
                         </div>
                     </div>
                 </div>

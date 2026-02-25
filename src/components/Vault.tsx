@@ -1,9 +1,30 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Database, ShieldCheck, HardDrive, Key, Lock, Download, Activity } from "lucide-react";
+import { Database, ShieldCheck, HardDrive, Key, Lock, Download } from "lucide-react";
+
+import { useState } from "react";
 
 export default function Vault() {
+    const [isSnapshotting, setIsSnapshotting] = useState(false);
+    const [progress, setProgress] = useState(0);
+
+    const startSnapshot = () => {
+        setIsSnapshotting(true);
+        setProgress(0);
+
+        const interval = setInterval(() => {
+            setProgress(prev => {
+                if (prev >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => setIsSnapshotting(false), 1000);
+                    return 100;
+                }
+                return prev + 5;
+            });
+        }, 150);
+    };
+
     return (
         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
             <div className="space-y-2">
@@ -56,11 +77,24 @@ export default function Vault() {
                         <div className="space-y-2">
                             <h3 className="text-xl font-bold">Resonance Backup</h3>
                             <p className="text-sm text-slate-400 leading-relaxed">
-                                Snapshot your entire identity architecture to your local hardware pulse.
+                                {isSnapshotting ? `Snapshotting In Progress... ${progress}%` : "Snapshot your entire identity architecture to your local hardware pulse."}
                             </p>
+                            {isSnapshotting && (
+                                <div className="w-full h-2 bg-teal-500/10 rounded-full overflow-hidden mt-4">
+                                    <motion.div
+                                        initial={{ width: 0 }}
+                                        animate={{ width: `${progress}%` }}
+                                        className="h-full bg-teal-500"
+                                    />
+                                </div>
+                            )}
                         </div>
-                        <button className="w-full py-4 rounded-2xl bg-teal-500 text-black font-bold hover:scale-[1.02] transition-all">
-                            Initiate Snapshot
+                        <button
+                            onClick={startSnapshot}
+                            disabled={isSnapshotting}
+                            className="w-full py-4 rounded-2xl bg-teal-500 text-black font-bold hover:scale-[1.02] transition-all active:scale-95 disabled:opacity-50"
+                        >
+                            {isSnapshotting ? "Snapshoting..." : "Initiate Snapshot"}
                         </button>
                     </div>
 

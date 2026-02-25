@@ -4,6 +4,17 @@ import { motion } from "framer-motion";
 import { BookOpen, GraduationCap, Lightbulb, MessageSquare, Play, Sparkles, User, Brain } from "lucide-react";
 
 export default function Acharya() {
+    const [isSessionActive, setIsSessionActive] = useState(false);
+    const [messages, setMessages] = useState<string[]>([]);
+
+    const startSession = () => {
+        setIsSessionActive(true);
+        setMessages(["Seeking the master..."]);
+
+        setTimeout(() => setMessages(prev => [...prev, "Acharya is present. Speak, Architect."]), 1000);
+        setTimeout(() => setMessages(prev => [...prev, "The resonance of your last output was tuned to 432Hz logic."]), 2500);
+    };
+
     return (
         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700 max-w-5xl mx-auto">
             <div className="text-center space-y-4">
@@ -18,19 +29,42 @@ export default function Acharya() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-8">
-                <div className="glass p-10 rounded-[3rem] border-white/5 space-y-8 bg-gradient-to-br from-indigo-500/10 to-transparent">
+                <div className="glass p-10 rounded-[3rem] border-white/5 space-y-8 bg-gradient-to-br from-indigo-500/10 to-transparent flex flex-col">
                     <div className="w-16 h-16 rounded-[2rem] bg-indigo-500 flex items-center justify-center shadow-[0_0_30px_rgba(99,102,241,0.4)]">
                         <User className="w-8 h-8 text-white" />
                     </div>
-                    <div className="space-y-4">
-                        <h3 className="text-2xl font-black text-white leading-tight">Interact with your Master</h3>
-                        <p className="text-slate-400 leading-relaxed">
-                            Acharya doesn&apos;t just respond; he guides. Trained on the deepest pedagogical roots for infinite patience.
-                        </p>
+
+                    <div className="flex-1 space-y-4">
+                        {!isSessionActive ? (
+                            <>
+                                <h3 className="text-2xl font-black text-white leading-tight">Interact with your Master</h3>
+                                <p className="text-slate-400 leading-relaxed">
+                                    Acharya doesn&apos;t just respond; he guides. Trained on the deepest pedagogical roots for infinite patience.
+                                </p>
+                            </>
+                        ) : (
+                            <div className="space-y-3 font-mono text-sm">
+                                {messages.map((m: string, i: number) => (
+                                    <motion.p
+                                        key={i}
+                                        initial={{ opacity: 0, x: -10 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        className={i === messages.length - 1 ? "text-indigo-400" : "text-slate-500"}
+                                    >
+                                        &gt; {m}
+                                    </motion.p>
+                                ))}
+                            </div>
+                        )}
                     </div>
-                    <button className="w-full py-5 rounded-[2rem] bg-white text-black font-black text-lg hover:bg-slate-200 transition-all flex items-center justify-center gap-3">
+
+                    <button
+                        onClick={startSession}
+                        disabled={isSessionActive}
+                        className="w-full py-5 rounded-[2rem] bg-white text-black font-black text-lg hover:bg-slate-200 transition-all flex items-center justify-center gap-3 disabled:opacity-50"
+                    >
                         <MessageSquare className="w-6 h-6" />
-                        Start Session
+                        {isSessionActive ? "Session Live" : "Start Session"}
                     </button>
                 </div>
 
@@ -72,7 +106,13 @@ export default function Acharya() {
     );
 }
 
-function LearningPathCard({ icon, title, desc }: any) {
+interface LearningPathCardProps {
+    icon: React.ReactNode;
+    title: string;
+    desc: string;
+}
+
+function LearningPathCard({ icon, title, desc }: LearningPathCardProps) {
     return (
         <div className="glass p-6 rounded-[2rem] border-white/5 hover:border-indigo-500/20 transition-all cursor-pointer flex gap-5 items-center bg-black/40">
             <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center shrink-0">
