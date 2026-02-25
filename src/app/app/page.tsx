@@ -109,7 +109,7 @@ export default function AppDashboard() {
             </aside>
 
             {/* Main Content */}
-            <main className="flex-1 p-6 md:p-12 overflow-y-auto">
+            <main className="flex-1 p-6 md:p-12 pt-20 md:pt-24 overflow-y-auto">
                 <header className="flex items-center justify-between mb-8 md:mb-16 max-w-7xl mx-auto">
                     <div className="space-y-1">
                         <motion.h1
