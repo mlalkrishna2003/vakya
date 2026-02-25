@@ -7,7 +7,6 @@ import { useState } from "react";
 export default function Nexus() {
     const [isDeploying, setIsDeploying] = useState(false);
     const [status, setStatus] = useState<string | null>(null);
-    const [selectedArch, setSelectedArch] = useState<string | null>(null);
 
     const handleDeploy = (archName?: string) => {
         setIsDeploying(true);
@@ -185,6 +184,7 @@ interface ArchCardProps {
     title: string;
     desc: string;
     tags: string[];
+    onClick?: () => void;
 }
 
 function ArchCard({ title, desc, tags, onClick }: ArchCardProps) {
