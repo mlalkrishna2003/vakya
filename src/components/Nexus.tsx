@@ -5,20 +5,21 @@ import { Code2, Plus, Terminal, Sparkles, BookOpen } from "lucide-react";
 import { useState } from "react";
 
 export default function Nexus() {
-    const [isDeploying, setIsDeploying] = useState(false);
-    const [status, setStatus] = useState<string | null>(null);
+    const [selectedArch, setSelectedArch] = useState<string | null>(null);
 
-    const handleDeploy = () => {
+    const handleDeploy = (archName?: string) => {
         setIsDeploying(true);
-        setStatus("Provisioning Pulse-X Node...");
+        const name = archName || "General Agent";
+        setStatus(`Initializing ${name}...`);
 
-        setTimeout(() => setStatus("Injecting Neural weights..."), 1500);
-        setTimeout(() => setStatus("Warming High-Frequency Bridge..."), 3000);
+        setTimeout(() => setStatus("Provisioning Pulse-X Node..."), 1000);
+        setTimeout(() => setStatus("Injecting Neural weights..."), 2500);
+        setTimeout(() => setStatus("Warming High-Frequency Bridge..."), 4000);
         setTimeout(() => {
             setIsDeploying(false);
-            setStatus("Agent Specialized.");
+            setStatus(`${name} Specialized.`);
             setTimeout(() => setStatus(null), 3000);
-        }, 4500);
+        }, 5500);
     };
 
     return (
@@ -46,7 +47,7 @@ export default function Nexus() {
                         </motion.span>
                     )}
                     <button
-                        onClick={handleDeploy}
+                        onClick={() => handleDeploy()}
                         disabled={isDeploying}
                         className="flex items-center gap-2 px-6 py-3 rounded-2xl bg-blue-500 text-white font-bold shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:scale-105 transition-all active:scale-95 disabled:opacity-50 disabled:hover:scale-100"
                     >
@@ -82,7 +83,14 @@ export default function Nexus() {
                             The Master Architect. Consult Vakya MD to draft specialized neural blueprints tailored for regional high-fidelity resonance.
                         </p>
                     </div>
-                    <button className="px-8 py-4 rounded-2xl bg-white text-black font-black text-sm uppercase tracking-widest hover:bg-teal-500 hover:text-white transition-all shadow-xl">
+                    <button
+                        onClick={() => {
+                            setStatus("Consulting Vakya MD...");
+                            setTimeout(() => setStatus("MD: Launching Human Evolution..."), 2000);
+                            setTimeout(() => setStatus(null), 5000);
+                        }}
+                        className="px-8 py-4 rounded-2xl bg-white text-black font-black text-sm uppercase tracking-widest hover:bg-teal-500 hover:text-white transition-all shadow-xl"
+                    >
                         Consult MD
                     </button>
                 </div>
@@ -173,9 +181,12 @@ interface ArchCardProps {
     tags: string[];
 }
 
-function ArchCard({ title, desc, tags }: ArchCardProps) {
+function ArchCard({ title, desc, tags, onClick }: ArchCardProps) {
     return (
-        <div className="p-6 rounded-3xl bg-white/5 border border-white/5 hover:border-blue-500/20 transition-all cursor-pointer group">
+        <div
+            onClick={onClick}
+            className="p-6 rounded-3xl bg-white/5 border border-white/5 hover:border-blue-500/20 transition-all cursor-pointer group active:scale-[0.98]"
+        >
             <h4 className="text-lg font-bold text-white group-hover:text-blue-400 transition-colors">{title}</h4>
             <p className="text-xs text-slate-500 mt-2 mb-4 leading-relaxed">{desc}</p>
             <div className="flex flex-wrap gap-2">
