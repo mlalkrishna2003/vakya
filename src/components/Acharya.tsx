@@ -7,13 +7,43 @@ import { useState } from "react";
 export default function Acharya() {
     const [isSessionActive, setIsSessionActive] = useState(false);
     const [messages, setMessages] = useState<string[]>([]);
+    const [audioUrl, setAudioUrl] = useState<string | null>(null);
+    const [isSpeaking, setIsSpeaking] = useState(false);
+
+    const speakMessage = async (text: string) => {
+        setIsSpeaking(true);
+        try {
+            const response = await fetch("http://localhost:8086/api/v1/synthesize", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    text: text,
+                    target_language: "en",
+                    emotion_profile: "en_indian_base_01" // Using the deep philosophical voice for the teacher
+                })
+            });
+
+            if (response.ok) {
+                const blob = await response.blob();
+                const url = URL.createObjectURL(blob);
+                setAudioUrl(url);
+                const audio = new Audio(url);
+                audio.onended = () => setIsSpeaking(false);
+                audio.play();
+            } else {
+                setIsSpeaking(false);
+            }
+        } catch (error) {
+            console.error(error);
+            setIsSpeaking(false);
+        }
+    };
 
     const startSession = () => {
         setIsSessionActive(true);
-        setMessages(["Seeking the master..."]);
-
-        setTimeout(() => setMessages(prev => [...prev, "Acharya is present. Speak, Architect."]), 1000);
-        setTimeout(() => setMessages(prev => [...prev, "The resonance of your last output was tuned to 432Hz logic."]), 2500);
+        const introMsg = "Acharya is present. Speak, Architect.";
+        setMessages(["Seeking the master...", introMsg]);
+        speakMessage(introMsg);
     };
 
     return (
@@ -61,12 +91,17 @@ export default function Acharya() {
 
                     <button
                         onClick={startSession}
-                        disabled={isSessionActive}
+                        disabled={isSessionActive || isSpeaking}
                         className="w-full py-5 rounded-[2rem] bg-white text-black font-black text-lg hover:bg-slate-200 transition-all flex items-center justify-center gap-3 disabled:opacity-50"
                     >
                         <MessageSquare className="w-6 h-6" />
-                        {isSessionActive ? "Session Live" : "Start Session"}
+                        {isSpeaking ? "Acharya is Speaking..." : isSessionActive ? "Session Live" : "Start Session"}
                     </button>
+                    {audioUrl && (
+                        <div className="flex justify-center mt-4">
+                            <audio controls src={audioUrl} className="w-full max-w-sm rounded-lg opacity-50 hover:opacity-100 transition-opacity" />
+                        </div>
+                    )}
                 </div>
 
                 <div className="space-y-6">

@@ -7,6 +7,8 @@ import { useState } from "react";
 export default function Nexus() {
     const [isDeploying, setIsDeploying] = useState(false);
     const [status, setStatus] = useState<string | null>(null);
+    const [audioUrl, setAudioUrl] = useState<string | null>(null);
+    const [isConsulting, setIsConsulting] = useState(false);
 
     const handleDeploy = (archName?: string) => {
         setIsDeploying(true);
@@ -85,16 +87,48 @@ export default function Nexus() {
                         </p>
                     </div>
                     <button
-                        onClick={() => {
+                        onClick={async () => {
+                            if (isConsulting) return;
+                            setIsConsulting(true);
                             setStatus("Consulting Vakya MD...");
-                            setTimeout(() => setStatus("MD: Launching Human Evolution..."), 2000);
-                            setTimeout(() => setStatus(null), 5000);
+                            try {
+                                const response = await fetch("http://localhost:8086/api/v1/synthesize", {
+                                    method: "POST",
+                                    headers: { "Content-Type": "application/json" },
+                                    body: JSON.stringify({
+                                        text: "Namaste architect. I am Vakya MD. Your neural structure is perfectly aligned today. How can we optimize human evolution?",
+                                        target_language: "en",
+                                        emotion_profile: "en_indian_base_01" // Empathetic medical tone
+                                    })
+                                });
+                                
+                                if (response.ok) {
+                                    const blob = await response.blob();
+                                    const url = URL.createObjectURL(blob);
+                                    setAudioUrl(url);
+                                    const audio = new Audio(url);
+                                    setStatus("MD: Synthesis complete.");
+                                    audio.play();
+                                }
+                            } catch (error) {
+                                console.error(error);
+                                setStatus("MD: Neural Link Offline.");
+                            } finally {
+                                setIsConsulting(false);
+                                setTimeout(() => setStatus(null), 5000);
+                            }
                         }}
-                        className="px-8 py-4 rounded-2xl bg-white text-black font-black text-sm uppercase tracking-widest hover:bg-teal-500 hover:text-white transition-all shadow-xl"
+                        disabled={isConsulting}
+                        className="px-8 py-4 rounded-2xl bg-white text-black font-black text-sm uppercase tracking-widest hover:bg-teal-500 hover:text-white transition-all shadow-xl disabled:opacity-50"
                     >
-                        Consult MD
+                        {isConsulting ? 'Consulting...' : 'Consult MD'}
                     </button>
                 </div>
+                {audioUrl && (
+                    <div className="absolute bottom-4 right-8 z-20">
+                         <audio controls src={audioUrl} className="h-8 max-w-[200px] opacity-20 hover:opacity-100 transition-opacity" />
+                    </div>
+                )}
             </motion.div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

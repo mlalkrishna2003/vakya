@@ -2,10 +2,6 @@
 
 import { motion } from "framer-motion";
 import { Globe, Microscope, Lock, Plus, ChevronRight } from "lucide-react";
-"use client";
-
-import { motion } from "framer-motion";
-import { Globe, Microscope, Lock, Plus, ChevronRight } from "lucide-react";
 import { useState } from "react";
 
 export default function KnowledgeTrinity() {

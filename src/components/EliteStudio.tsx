@@ -5,24 +5,65 @@ import { Zap, Brain, Cpu, Music, Share2, Layers } from "lucide-react";
 import { useState } from "react";
 
 export default function EliteStudio() {
+    const [text, setText] = useState("");
+    const [audioUrl, setAudioUrl] = useState<string | null>(null);
     const [isSculpting, setIsSculpting] = useState(false);
     const [sculptStatus, setSculptStatus] = useState<string | null>(null);
     const [stats, setStats] = useState({ cpu: 12, thrm: 55 });
 
-    const handleSculpt = () => {
+    const handleSculpt = async () => {
+        if (!text.trim()) {
+            setSculptStatus("Please enter a script.");
+            setTimeout(() => setSculptStatus(null), 2000);
+            return;
+        }
+
         setIsSculpting(true);
         setSculptStatus("Neural Alignment Initiated...");
         setStats({ cpu: 88, thrm: 72 });
+        setAudioUrl(null);
 
-        setTimeout(() => setSculptStatus("Calibrating Bhaava-Weights..."), 1500);
-        setTimeout(() => setStats({ cpu: 94, thrm: 79 }), 2000);
-        setTimeout(() => setSculptStatus("Finalizing Quantum Resonance..."), 3000);
-        setTimeout(() => {
-            setIsSculpting(false);
+        try {
+            setTimeout(() => setSculptStatus("Calibrating Bhaava-Weights..."), 1000);
+            setTimeout(() => setStats({ cpu: 94, thrm: 79 }), 1500);
+            
+            // Hardcoding Tamil for Elite Studio demonstration
+            const langCode = "ta";
+            const emotionId = "te_philosopher_01"; // High fidelity emotional seed
+            
+            const response = await fetch("http://localhost:8085/api/v1/synthesize", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    text: text,
+                    target_language: langCode,
+                    emotion_profile: emotionId
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`Synthesis failed: ${response.statusText}`);
+            }
+
+            setSculptStatus("Finalizing Quantum Resonance...");
+            const blob = await response.blob();
+            const url = URL.createObjectURL(blob);
+            setAudioUrl(url);
+
             setSculptStatus("Calibration Complete.");
             setStats({ cpu: 12, thrm: 55 });
+            const audio = new Audio(url);
+            audio.play();
+
             setTimeout(() => setSculptStatus(null), 3000);
-        }, 4500);
+        } catch (error) {
+            console.error(error);
+            setSculptStatus("Core Error. Ensure API is running.");
+            setStats({ cpu: 12, thrm: 55 });
+            setTimeout(() => setSculptStatus(null), 3000);
+        } finally {
+            setIsSculpting(false);
+        }
     };
 
     return (
@@ -78,6 +119,8 @@ export default function EliteStudio() {
                         </div>
 
                         <textarea
+                            value={text}
+                            onChange={(e) => setText(e.target.value)}
                             className="w-full bg-transparent border-none resize-none text-3xl font-light italic text-white placeholder:text-slate-800 focus:ring-0 min-h-[300px] leading-relaxed"
                             placeholder="&quot;Silence is the root of Dhvani. Let the words flow from the heart of the machine...&quot;"
                         />
@@ -96,6 +139,11 @@ export default function EliteStudio() {
                                 {isSculpting ? "SCULPTING..." : "SCULPT AUDIO"}
                             </button>
                         </div>
+                        {audioUrl && (
+                            <div className="mt-8 flex justify-end">
+                                <audio controls src={audioUrl} className="w-full max-w-md rounded-xl shadow-[0_0_20px_rgba(245,158,11,0.2)]" />
+                            </div>
+                        )}
                     </div>
                 </div>
 

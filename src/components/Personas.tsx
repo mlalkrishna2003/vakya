@@ -2,10 +2,6 @@
 
 import { motion } from "framer-motion";
 import { Users, UserPlus, Heart, Zap, Shield, User } from "lucide-react";
-"use client";
-
-import { motion } from "framer-motion";
-import { Users, UserPlus, Heart, Zap, Shield, User } from "lucide-react";
 import { useState } from "react";
 
 export default function Personas() {

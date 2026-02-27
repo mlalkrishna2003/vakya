@@ -19,7 +19,6 @@ import Vault from "@/components/Vault";
 import Security from "@/components/Security";
 import Nexus from "@/components/Nexus";
 import VoiceStudio from "@/components/VoiceStudio";
-import EliteStudio from "@/components/EliteStudio";
 import Acharya from "@/components/Acharya";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -50,7 +49,6 @@ export default function Dashboard() {
           <NavItem icon={<Users className="w-5 h-5" />} label="Personas" active={activeView === "personas"} onClick={() => setActiveView("personas")} />
           <NavItem icon={<Settings className="w-5 h-5" />} label="Dev Nexus" active={activeView === "nexus"} onClick={() => setActiveView("nexus")} />
           <NavItem icon={<Mic className="w-5 h-5" />} label="Voice Studio" active={activeView === "studio"} onClick={() => setActiveView("studio")} />
-          <NavItem icon={<Zap className="w-5 h-5" />} label="Elite Studio" active={activeView === "elite"} onClick={() => setActiveView("elite")} />
           <NavItem icon={<GraduationCap className="w-5 h-5" />} label="AI Tutor" active={activeView === "acharya"} onClick={() => setActiveView("acharya")} />
           <NavItem icon={<Database className="w-5 h-5" />} label="Vault" active={activeView === "vault"} onClick={() => setActiveView("vault")} />
           <NavItem icon={<ShieldCheck className="w-5 h-5" />} label="Security" active={activeView === "security"} onClick={() => setActiveView("security")} />
@@ -246,15 +244,6 @@ export default function Dashboard() {
               </motion.div>
             )}
 
-            {activeView === "elite" && (
-              <motion.div
-                key="elite"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.4 }}
-              >
-                <EliteStudio />
               </motion.div>
             )}
 
