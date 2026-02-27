@@ -92,7 +92,8 @@ export default function Nexus() {
                             setIsConsulting(true);
                             setStatus("Consulting Vakya MD...");
                             try {
-                                const response = await fetch("http://localhost:8086/api/v1/synthesize", {
+                                const API_BASE = process.env.NEXT_PUBLIC_VAKYA_API_URL || "http://localhost:8086";
+                                const response = await fetch(`${API_BASE}/api/v1/synthesize`, {
                                     method: "POST",
                                     headers: { "Content-Type": "application/json" },
                                     body: JSON.stringify({
@@ -101,7 +102,7 @@ export default function Nexus() {
                                         emotion_profile: "en_indian_base_01" // Empathetic medical tone
                                     })
                                 });
-                                
+
                                 if (response.ok) {
                                     const blob = await response.blob();
                                     const url = URL.createObjectURL(blob);
@@ -126,7 +127,7 @@ export default function Nexus() {
                 </div>
                 {audioUrl && (
                     <div className="absolute bottom-4 right-8 z-20">
-                         <audio controls src={audioUrl} className="h-8 max-w-[200px] opacity-20 hover:opacity-100 transition-opacity" />
+                        <audio controls src={audioUrl} className="h-8 max-w-[200px] opacity-20 hover:opacity-100 transition-opacity" />
                     </div>
                 )}
             </motion.div>

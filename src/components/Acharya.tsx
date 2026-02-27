@@ -13,7 +13,8 @@ export default function Acharya() {
     const speakMessage = async (text: string) => {
         setIsSpeaking(true);
         try {
-            const response = await fetch("http://localhost:8086/api/v1/synthesize", {
+            const API_BASE = process.env.NEXT_PUBLIC_VAKYA_API_URL || "http://localhost:8086";
+            const response = await fetch(`${API_BASE}/api/v1/synthesize`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
